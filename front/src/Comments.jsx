@@ -17,7 +17,7 @@ const Comments = ({ breed }) => {
     if (newComment.trim() === "") return;
 
     const comment = {
-      id: Date.now(),
+      id: 1,
       username: "Guest",
       text: newComment,
       breed,
@@ -38,16 +38,16 @@ const Comments = ({ breed }) => {
       .catch((error) => console.error("Error adding comment:", error));
   };
 
-  const handleDeleteComment = (id) => {
-    fetch(`http://localhost:3005/comments/${id}`, {
-      method: "DELETE",
-    })
-      .then(() => {
-        const updatedComments = comments.filter((comment) => comment.id !== id);
-        setComments(updatedComments);
-      })
-      .catch((error) => console.error("Error deleting comment:", error));
-  };
+  // const handleDeleteComment = (id) => {
+  //   fetch(`http://localhost:3005/comments/${id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then(() => {
+  //       const updatedComments = comments.filter((comment) => comment.id !== id);
+  //       setComments(updatedComments);
+  //     })
+  //     .catch((error) => console.error("Error deleting comment:", error));
+  // };
 
   return (
     <div className="container">

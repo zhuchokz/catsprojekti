@@ -6,8 +6,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const fs = require('fs');
 
-const dbConfig = require('./dbconfig.json');
-const db = require('./dbconfig2.json');
+const dbConfig = require('./dbconfig.json');  // Один конфиг
 const { port, host } = require('./config.json');
 
 app.use(cors());
@@ -17,23 +16,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'templates'));
 
+// Используем только один коннектор
 const connection = mysql.createConnection(dbConfig);
-const connection2 = mysql.createConnection(db);
-
-
-connection2.connect((err) => {
-  if (err) {
-    console.error('error', err);
-    return;
-  }
-});
 
 connection.connect((err) => {
   if (err) {
     console.error('error', err);
     return;
   }
+  console.log('Connected to MySQL database');
 });
+
 app.get('/cats', (req, res) => {
   const { color, size, character } = req.query; 
   let query = 'SELECT DISTINCT * FROM cats'; 
@@ -75,46 +68,46 @@ app.get('/colours', (req, res) => {
     });
   });
 
-  app.get('/size', (req, res) => {
-    const query = 'SELECT DISTINCT size FROM cats';
-    connection.query(query, (err, results) => {
-      if (err) {
-        console.error('Query error:', err);
-        res.status(500).send('Server error');
-        return;
-      }
-      res.json(results);
-    });
+app.get('/size', (req, res) => {
+  const query = 'SELECT DISTINCT size FROM cats';
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Query error:', err);
+      res.status(500).send('Server error');
+      return;
+    }
+    res.json(results);
   });
-
-  app.get('/character', (req, res) => {
-    const query = 'SELECT DISTINCT personality FROM cats';
-    connection.query(query, (err, results) => {
-      if (err) {
-        console.error('Query error:', err);
-        res.status(500).send('Server error');
-        return;
-      }
-      res.json(results);
-    });
-  });
-
-  app.get('/cats/:breed', (req, res) => {
-    const { breed } = req.params;
-    const query = 'SELECT * FROM cats WHERE breed = ?';
-
-    connection.query(query, [breed], (err, results) => {
-        if (err) {
-            console.error('Query error:', err);
-            res.status(500).send('Server error');
-            return;
-        }
-
-        res.json(results);
-    });
 });
-const commentsFilePath = path.join(__dirname, 'comments.json');
 
+app.get('/character', (req, res) => {
+  const query = 'SELECT DISTINCT personality FROM cats';
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Query error:', err);
+      res.status(500).send('Server error');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/cats/:breed', (req, res) => {
+  const { breed } = req.params;
+  const query = 'SELECT * FROM cats WHERE breed = ?';
+
+  connection.query(query, [breed], (err, results) => {
+    if (err) {
+        console.error('Query error:', err);
+        res.status(500).send('Server error');
+        return;
+    }
+
+    res.json(results);
+  });
+});
+
+const commentsFilePath = path.join(__dirname, 'comments.json');
 
 app.get('/comments/:breed', (req, res) => {
   const { breed } = req.params;
@@ -138,8 +131,15 @@ app.post('/comments/:breed', (req, res) => {
           console.error('Error reading comments:', err);
           return res.status(500).send('Error reading comments');
       }
-
       const comments = JSON.parse(data || '[]');
+      console.log(comments.map(userscom => "" + userscom.id))
+      const com = "x" + newComment.id;
+      console.log(com)
+      if ((comments.map(userscom => "x" +userscom.id)).includes(com)){
+        const temp = "x" + newComment.id + "100";
+        newComment.id +temp;
+      }
+      console.log(newComment)
       comments.push(newComment);
 
       fs.writeFile(commentsFilePath, JSON.stringify(comments, null, 2), (err) => {
@@ -152,17 +152,7 @@ app.post('/comments/:breed', (req, res) => {
   });
 });
 
-//users
-
-connection2.connect((err) => {
-  if (err) {
-    console.error('Could not connect to MySQL:', err);
-    return;
-  }
-  console.log('Connected to MySQL database');
-});
-
-
+// Users
 app.use(session({
   secret: 'yourSecretKey',
   resave: false,
@@ -185,7 +175,7 @@ app.post('/register', (req, res) => {
     return res.status(400).send('Username and password are required.');
   }
 
-  connection2.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
+  connection.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
     if (err) {
       return res.status(500).send('Error checking username.');
     }
@@ -196,7 +186,7 @@ app.post('/register', (req, res) => {
 
     const hashedPassword = hashPassword(password);
 
-    connection2.query(
+    connection.query(
       'INSERT INTO users (username, password) VALUES (?, ?)',
       [username, hashedPassword],
       (err, result) => {
@@ -218,7 +208,7 @@ app.post('/login', (req, res) => {
 
   const hashedPassword = hashPassword(password);
 
-  connection2.query(
+  connection.query(
     'SELECT * FROM users WHERE username = ? AND password = ?',
     [username, hashedPassword],
     (err, results) => {
@@ -240,8 +230,6 @@ app.post('/login', (req, res) => {
   );
 });
 
-
-
 app.post('/logout', (req, res) => {
   if (req.session.user) {
     req.session.destroy((err) => {
@@ -254,13 +242,14 @@ app.post('/logout', (req, res) => {
     res.status(400).send('No user logged in.');
   }
 });
+
 app.get('/profile', (req, res) => {
   if (!req.session.user) {
     return res.status(401).send('Please log in to view this page.');
   }
 
   const username = req.session.user.username;
-  connection2.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
+  connection.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
     if (err) {
       return res.status(500).send('Error fetching user profile.');
     }
@@ -273,8 +262,6 @@ app.get('/profile', (req, res) => {
     res.json(userProfile); 
   });
 });
-
-
 
 app.listen(port, host, () => {
   console.log(`cats projekti toimii ${host}:${port}`);
