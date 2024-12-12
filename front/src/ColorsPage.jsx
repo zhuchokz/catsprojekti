@@ -33,36 +33,28 @@ const ColoursPage = () => {
     navigate(`/cats/color/${color}`);
   };
 
-
-  return (
-    <div className="colours-page">
-
-      <h2>Colors</h2>
-      {
-        <div className="colordiv">
-          <ul>
-            {colors.length > 0 ? (
-              colors.map((color, index) => (
-                <div
-                  key={index}
-                  className="color-item"
-                  style={{
-                    backgroundColor: color.toLowerCase(), // Dynamically set the box background
-                    color: ["white", "cream"].includes(color.toLowerCase()) ? "black" : "white", // Adjust text color for contrast
-                  }}
-                  onClick={() => handleColorClick(color)} // Navigate on click
-                >
-                  <li>{color}</li>
-                </div>
-              ))
-            ) : (
-              <p>No colors available.</p>
-            )}
-          </ul>
-        </div>}
-    </div>
-
-  );
+ 
+    return (
+        <div className="colours-page">
+        
+        <h2>Colors</h2>
+        { 
+    <div className="colordiv">
+  <ul>
+    {colors.length > 0 ? (
+      colors.map((color, index) => (
+        <div key={index} className="color-item">
+          <li onClick={() => handleColorClick(color)}>{color}</li>
+        </div>
+      ))
+    ) : (
+      <p>No colors available.</p>
+    )}
+  </ul>
+</div>}
+</div>
+    
+    );
 };
 
 export default ColoursPage;
