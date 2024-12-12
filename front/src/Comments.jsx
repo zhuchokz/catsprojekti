@@ -17,7 +17,7 @@ const Comments = ({ breed }) => {
     if (newComment.trim() === "") return;
 
     const comment = {
-      id: 1,
+      id: 1 ,
       username: "Guest",
       text: newComment,
       breed,

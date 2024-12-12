@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./pages.css";
 
 const AllCats = () => {
-    const { color, size, character } = useParams(); // Получаем параметры из URL
+    const { color, size, character } = useParams();
     const [cats, setCats] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
     const navigate = useNavigate();
@@ -11,14 +11,6 @@ const AllCats = () => {
     useEffect(() => {
         const fetchCats = async () => {
             let url = "http://localhost:3005/cats";
-
-            /* if (color) {
-                url += `?color=${color}`;
-            } else if (size) {
-                url += `?size=${size}`;
-            } else if (character) {
-                url += `?character=${character}`;
-            } */
 
             try {
                 const response = await fetch(url);
@@ -29,7 +21,7 @@ const AllCats = () => {
             }
         };
 
-        if (!cats) fetchCats();
+        if (!cats?.length) fetchCats();
     }, [cats]);
 
     useEffect(() => {
