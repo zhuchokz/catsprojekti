@@ -4,6 +4,7 @@ import "./Comments.css";
 const Comments = ({ breed }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     fetch(`http://localhost:3005/comments/${breed}`)

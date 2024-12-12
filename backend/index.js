@@ -130,51 +130,51 @@ app.get('/comments/:breed', (req, res) => {
 });
 
 app.post('/comments/:breed', (req, res) => {
-  const { commentstext, user_id, cat_id } = req.body;
-  console.log(user_id)
+  // const { commentstext, user_id, cat_id } = req.body;
+  // console.log(user_id)
 
-  if (!user_id || !cat_id) {
-      return res.status(400).send('User ID and Cat ID are required');
-  }
+  // if (!user_id || !cat_id) {
+  //     return res.status(400).send('User ID and Cat ID are required');
+  // }
 
-  const query = 'INSERT INTO comments (commentstext, user_id, cat_id) VALUES (?, ?, ?)';
-  const values = [commentstext, user_id, cat_id];
+  // const query = 'INSERT INTO comments (commentstext, user_id, cat_id) VALUES (?, ?, ?)';
+  // const values = [commentstext, user_id, cat_id];
 
-  connection.query(query, values, (err, result) => {
-      if (err) {
-          console.error('Error adding to favorites:', err);
-          return res.status(500).send('Error adding to favorites');
-      }
-      res.status(201).send('Favorite added');
-  });
-  // const { breed } = req.params;
-  // const newComment = { ...req.body, breed }; 
-
-  // fs.readFile(commentsFilePath, 'utf-8', (err, data) => {
-    
+  // connection.query(query, values, (err, result) => {
   //     if (err) {
-  //         console.error('Error reading comments:', err);
-  //         return res.status(500).send('Error reading comments');
+  //         console.error('Error adding to favorites:', err);
+  //         return res.status(500).send('Error adding to favorites');
   //     }
-  //     const comments = JSON.parse(data || '[]');
-  //     console.log(comments.map(userscom => "" + userscom.id))
-  //     const com = "x" + newComment.id;
-  //     console.log(com)
-  //     if ((comments.map(userscom => "x" +userscom.id)).includes(com)){
-  //       const temp = "x" + newComment.id + "100";
-  //       newComment.id +temp;
-  //     }
-  //     console.log(newComment)
-  //     comments.push(newComment);
-
-  //     fs.writeFile(commentsFilePath, JSON.stringify(comments, null, 2), (err) => {
-  //         if (err) {
-  //             console.error('Error saving comment:', err);
-  //             return res.status(500).send('Error saving comment');
-  //         }
-  //         res.status(201).json(newComment);
-  //     });
+  //     res.status(201).send('Favorite added');
   // });
+  const { breed } = req.params;
+  const newComment = { ...req.body, breed }; 
+
+  fs.readFile(commentsFilePath, 'utf-8', (err, data) => {
+    
+      if (err) {
+          console.error('Error reading comments:', err);
+          return res.status(500).send('Error reading comments');
+      }
+      const comments = JSON.parse(data || '[]');
+      console.log(comments.map(userscom => "" + userscom.id))
+      const com = "x" + newComment.id;
+      console.log(com)
+      if ((comments.map(userscom => "x" +userscom.id)).includes(com)){
+        const temp = "x" + newComment.id + "100";
+        newComment.id +temp;
+      }
+      console.log(newComment)
+      comments.push(newComment);
+
+      fs.writeFile(commentsFilePath, JSON.stringify(comments, null, 2), (err) => {
+          if (err) {
+              console.error('Error saving comment:', err);
+              return res.status(500).send('Error saving comment');
+          }
+          res.status(201).json(newComment);
+      });
+  });
 });
 
 // Users
@@ -249,17 +249,13 @@ app.post('/login', (req, res) => {
 
       res.json({
         message: 'Login successful.',
+        credentials: 'include',  
         user: { user_id: user.id, username: user.username }
       });
     }
   );
 });
-app.get('/current-user', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).send({ error: 'User not logged in.' });
-  }
-  res.json({ user_id: req.session.user.user_id });
-});
+
 
 
 app.post('/logout', (req, res) => {
@@ -333,10 +329,37 @@ app.get('/favorites', (req, res) => {
     });
 });
 
+app.get('/favorites/:user_id', (req, res) => {
+  const { user_id } = req.params;
+
+  if (!user_id) {
+    return res.status(400).send('User ID is required');
+  }
+
+  const query = `
+    SELECT cats.* 
+    FROM favorites 
+    JOIN cats ON favorites.cat_id = cats.id 
+    WHERE favorites.user_id = ?
+  `;
+
+  connection.query(query, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching favorites:', err);
+      return res.status(500).send('Error fetching favorites');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('No favorites found for this user');
+    }
+
+    res.json(results);
+  });
+});
 
 
-app.delete('/favorites/:cat_id', (req, res) => {
-  const { user_id, cat_id } = req.body;
+app.delete('/favorites/:user_id/:cat_id', (req, res) => {
+  const { user_id, cat_id } = req.params;
 
   if (!user_id || !cat_id) {
       return res.status(400).send('User ID and Cat ID are required');

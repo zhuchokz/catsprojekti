@@ -30,24 +30,10 @@ const ColoursPage = () => {
     }, []);
 
     const handleColorClick = (color) => {
-        navigate(`/cats/color/${color}`); 
-    };
+      navigate(`/cats/color/${color}`); 
+  };
 
-   /* <div className="colordiv">
-        <ul>
-            {colors.length > 0 ? (
-                colors.map((color, index) => (
-                    <div key={index} className="color-item">
-                        <li onClick={() => handleColorClick(color)}>
-                            {color}
-                        </li>
-                    </div>
-                ))
-            ) : (
-                <p>No colors available.</p>
-            )}
-        </ul>
-    </div> */
+ 
     return (
         <div className="colours-page">
         
