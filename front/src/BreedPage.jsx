@@ -8,7 +8,8 @@ const BreedPage = () => {
     const [cat, setCat] = useState(null);
     const [favorites, setFavorites] = useState([]);
     const [isFavorite, setIsFavorite] = useState(false);
-    const [userId, setUserId] = useState(1); // Замените 1 на ID текущего пользователя, если он передается динамически.
+    const user = JSON.parse(localStorage.getItem('user'));
+    const [userId, setUserId] = useState(user.user_id); 
 
     useEffect(() => {
         const fetchCat = async () => {
@@ -74,6 +75,7 @@ const BreedPage = () => {
             } catch (error) {
                 console.error('Error adding favorite:', error);
             }
+            
         }
     };
 

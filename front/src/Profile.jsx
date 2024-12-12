@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import "./profile.css";
 
 const Profile = () => {
+  
   const [user, setUser] = useState(null);
   const [favoriteCats, setFavoriteCats] = useState([]);
+  const storedUser = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (storedUser) {
       setUser(storedUser);
@@ -37,9 +38,9 @@ const Profile = () => {
   }, [user]);
   
   const fetchFavorites = () => {
-    const userId = user.id;
+    const userId = storedUser.user_id;
   
-    fetch(`http://localhost:3005/favorites?user_id=${userId}`, {
+    fetch(`http://localhost:3005/favorites/${userId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('user')}`,
@@ -47,21 +48,23 @@ const Profile = () => {
     })
       .then((response) => response.json())
       .then((favorites) => {
-        // Extract unique cat IDs from the favorites response
-        const uniqueCatIds = [...new Set(favorites.map((favorite) => favorite.cat_id))];
+        console.log(favorites);
+        setFavoriteCats(favorites);
+      //   const uniqueCatIds = [...new Set(favorites.map((favorite) => favorite.id))];
+      //   console.log(uniqueCatIds);
+        
+      //   const fetchCatDetails = uniqueCatIds.map((catId) =>
+      //     fetch(`http://localhost:3005/cats/${catId}`)
+      //       .then((response) => response.json())
+      //       .catch((error) => console.error(`Error fetching cat details for ${catId}:`, error))
+      //   );
   
-        // Fetch cat details for unique cat IDs
-        const fetchCatDetails = uniqueCatIds.map((catId) =>
-          fetch(`http://localhost:3005/cats/${catId}`)
-            .then((response) => response.json())
-            .catch((error) => console.error(`Error fetching cat details for ${catId}:`, error))
-        );
-  
-        // Resolve all fetch requests
-        Promise.all(fetchCatDetails).then((cats) => {
-          const validCats = cats.filter((cat) => cat && cat.id); // Ensure valid cat data
-          setFavoriteCats(validCats);
-        });
+      //   Promise.all(fetchCatDetails).then((cats) => {
+      //     console.log(cats);
+      //     const validCats = cats.filter((cat) => cat && cat.id);
+      //     console.log(validCats);
+      //     setFavoriteCats(validCats);
+      //   });
       })
       .catch((error) => console.error('Error fetching favorite cats:', error));
   };
@@ -75,7 +78,7 @@ const Profile = () => {
   };
 
   const handleRemoveFavorite = (catId) => {
-    fetch(`http://localhost:3005/favorites/${catId}`, {
+    fetch(`http://localhost:3005/favorites/${user.user_id}/${catId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('user')}`,
@@ -101,6 +104,7 @@ const Profile = () => {
       <div className="profile-container">
         <h2>Profile</h2>
         <p><strong>Username:</strong> {user.username}</p>
+        { console.log(favoriteCats) }
         <h2>Favorites</h2>
         {favoriteCats.length > 0 ? (
           <ul>
