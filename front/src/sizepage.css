@@ -1,0 +1,63 @@
+.sizes-page {
+    background-color: var(--background);
+    border-radius: 25px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 30px auto;
+    box-shadow: 0 10px 20px var(--accent);
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    color: var(--text);
+}
+
+.sizes-page h2 {
+    font-size: 36px;
+    color: var(--text);
+    margin-bottom: 40px;
+    letter-spacing: 1.5px;
+}
+
+.sizes-page ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three items per row */
+    gap: 30px;
+}
+
+.sizes-page li {
+    background-color: var(--secondary);
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.sizes-page li:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sizes-page li strong {
+    display: block;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.sizes-page li:nth-child(odd) {
+    background-color: var(--background);
+    border: 2px solid var(--secondary);
+}
+
+.sizes-page li:nth-child(even) {
+    background-color: var(--secondary);
+    border: 2px solid var(--accent);
+}
