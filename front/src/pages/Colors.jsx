@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Colours from '../ColorsPage';
+import Colors from '../ColorsPage';
 
 const Color = () => {
     return (
                 <div>
-                    <Colours/>
+                    <Colors/>
                 </div>
             );
   };

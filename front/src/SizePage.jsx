@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./pages.css";
+import "./sizepage.css";
 
 const SizesPage = () => {
     const [sizes, setSizes] = useState([]);
@@ -28,7 +28,7 @@ const SizesPage = () => {
     };
 
     return (
-        <div>
+        <div className="sizes-page">
             <h2>Sizes</h2>
             <ul>
                 {sizes.map((size, index) => (

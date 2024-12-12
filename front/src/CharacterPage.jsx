@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./pages.css";
+import "./characterpages.css";
 
 const Character = () => {
     const [personalities, setPersonalities] = useState([]);
@@ -34,8 +34,9 @@ const Character = () => {
     };
 
     return (
+        <>
+        <h2>Character</h2>
         <div className='character-page'>
-            <h2>Personalities</h2>
             <ul>
                 {personalities.map((personality, index) => (
                     <li key={index} onClick={() => handlePersonalityClick(personality)}>
@@ -45,6 +46,7 @@ const Character = () => {
                 ))}
             </ul>
         </div>
+        </>
     );
 };
 

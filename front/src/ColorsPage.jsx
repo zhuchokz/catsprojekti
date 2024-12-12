@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./pages.css";
+import "./colorspages.css";
 
 const ColoursPage = () => {
   const [colors, setColors] = useState([]);

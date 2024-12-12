@@ -17,7 +17,7 @@ const HomePage = () => {
                     <Link to="/cats" className='links'>Read more</Link>
                 </div>
                 <div className="category">
-                    <h3>Colours</h3>
+                    <h3>Colors</h3>
                     <img className='photo' src="/public/images/cat2.png" alt="aaa" />
                     <Link to="/colours" className="links">Read more</Link>
                 </div>

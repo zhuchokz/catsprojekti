@@ -1,0 +1,70 @@
+
+.character-page {
+    background-color: var(--background);
+    border-radius: 25px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 30px auto; 
+    box-shadow: 0 10px 20px rgba(105, 105, 105, 0.615);
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    color: var(--text);
+}
+
+.character-page ul {
+    list-style: none;
+    padding: 0;
+    margin-left: 87px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 350px); 
+    gap: 30px;
+    transition: all 0.3s ease;
+}
+
+.character-page li {
+    background-color: var(--secondary);
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100px;
+    max-width: 220px;
+    font-size: 22px;
+    display: flex;               
+    justify-content: center;     
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;    
+}
+
+.character-page li p {
+    color: var(--text);
+    margin: 0;
+    line-height: 1.6;
+}
+
+
+
+
+.character-page li:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.character-page li strong {
+    display: block; 
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 10px; 
+}
+
+.character-page li:nth-child(odd) {
+    background-color: var(--background);
+    border: 2px solid var(--secondary);
+}
+
+.character-page li:nth-child(even) {
+    background-color: var(--secondary); 
+    border: 2px solid var(--accent); 
+}
