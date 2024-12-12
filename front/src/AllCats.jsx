@@ -26,7 +26,7 @@ const AllCats = () => {
 
     useEffect(() => {
         if (color) {
-            const filteredCats = cats.filter((cat) => cat.color === color);
+            const filteredCats = cats.filter((cat) => { let colors = cat.color; if (colors.indexOf(",") > -1) colors = colors.split(','); else colors = [colors]; return colors.includes(color) });
             setFilteredList(filteredCats);
         } else if (size) {
             const filteredCats = cats.filter((cat) => cat.size === size);

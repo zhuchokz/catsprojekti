@@ -5,6 +5,7 @@ const Comments = ({ breed }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const user = JSON.parse(localStorage.getItem('user'));
+  const [userId, setUserId] = useState(user?.user_id);
 
   useEffect(() => {
     fetch(`http://localhost:3005/comments/${breed}`)
@@ -18,8 +19,7 @@ const Comments = ({ breed }) => {
     if (newComment.trim() === "") return;
 
     const comment = {
-      id: 1 ,
-      username: "Guest",
+      username:user.username,
       text: newComment,
       breed,
     };
@@ -59,12 +59,14 @@ const Comments = ({ breed }) => {
             <p>
               <strong>{comment.username}:</strong> {comment.text}
             </p>
-            
+
           </div>
         ))}
         {comments.length === 0 && <p>No comments yet.</p>}
+        {!userId&&<p>Please log in to add comments.</p>}
       </div>
-      <form onSubmit={handleAddComment} className="form">
+
+      {userId&&<form onSubmit={handleAddComment} className="form">
         <textarea
           className="textarea"
           placeholder="Write a comment..."
@@ -75,7 +77,7 @@ const Comments = ({ breed }) => {
         <button type="submit" className="addButton">
           Add Comment
         </button>
-      </form>
+      </form>}
     </div>
   );
 };

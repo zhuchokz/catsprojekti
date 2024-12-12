@@ -9,16 +9,16 @@ const Character = () => {
     useEffect(() => {
         const fetchPersonalities = async () => {
             try {
-                const response = await fetch('http://localhost:3005/character'); 
+                const response = await fetch('http://localhost:3005/character');
                 const data = await response.json();
 
                 const uniquePersonalities = Array.from(
                     new Set(
                         data
-                            .flatMap((item) => item.personality.split(',')) 
-                            .map((personality) => personality.trim()) 
+                            .flatMap((item) => item.personality.split(','))
+                            .map((personality) => personality.trim())
                     )
-                ).sort(); 
+                ).sort();
 
                 setPersonalities(uniquePersonalities);
             } catch (error) {
@@ -30,7 +30,7 @@ const Character = () => {
     }, []);
 
     const handlePersonalityClick = (personality) => {
-        navigate(`/cats/character/${personality}`); 
+        navigate(`/cats/character/${personality}`);
     };
 
     return (
@@ -39,8 +39,8 @@ const Character = () => {
             <ul>
                 {personalities.map((personality, index) => (
                     <li key={index} onClick={() => handlePersonalityClick(personality)}>
-                        {personality} 
-                        
+                        {personality}
+
                     </li>
                 ))}
             </ul>

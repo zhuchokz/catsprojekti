@@ -1,17 +1,3 @@
 [
-  {
-    "id": 1,
-    "username": "Guest",
-    "text": "fsds",
-    "breed": "American Curl"
-  },
-  {
-    "id": 1,
-    "username": {
-      "user_id": 3,
-      "username": "lalala22"
-    },
-    "text": "fdsfs",
-    "breed": "American Curl"
-  }
+  
 ]

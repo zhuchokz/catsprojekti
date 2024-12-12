@@ -1,55 +1,54 @@
 .container {
-    width: 50%;
-    margin: 20px auto;
-    font-family: Arial, sans-serif;
-  }
-  
-  .commentsList {
-    margin-bottom: 20px;
-  }
-  
-  .comment {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    position: relative;
-  }
-  
-  .deleteButton {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: #ff4d4d;
-    color: var(--text);
-    border: none;
-    border-radius: 3px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .textarea {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
-    margin-bottom: 10px;
-    height: 60px;
-  }
-  
-  .addButton {
-    padding: 10px;
-    font-size: 14px;
-    background-color: var(--secondary);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+  width: 50%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.commentsList {
+  margin-bottom: 20px;
+}
+
+.comment {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #ff4d4d;
+  color: var(--text);
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  margin-bottom: 10px;
+  height: 60px;
+}
+
+.addButton {
+  padding: 10px;
+  font-size: 14px;
+  background-color: var(--secondary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
