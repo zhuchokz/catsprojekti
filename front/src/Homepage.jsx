@@ -19,7 +19,7 @@ const HomePage = () => {
                 <div className="category">
                     <h3>Colors</h3>
                     <img className='photo' src="/public/images/cat2.png" alt="aaa" />
-                    <Link to="/colours" className="links">Read more</Link>
+                    <Link to="/colors" className="links">Read more</Link>
                 </div>
                 <div className="category">
                     <h3>Size</h3>

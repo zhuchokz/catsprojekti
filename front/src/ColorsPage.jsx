@@ -9,7 +9,7 @@ const ColoursPage = () => {
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const response = await fetch('http://localhost:3005/colours');
+        const response = await fetch('http://localhost:3005/colors');
         const data = await response.json();
 
         const uniqueColors = Array.from(

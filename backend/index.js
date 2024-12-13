@@ -77,7 +77,7 @@ function hashPassword(password) {
 app.use(express.static(__dirname));
 
 
-app.get('/colours', (req, res) => {
+app.get('/colors', (req, res) => {
   const query = 'SELECT DISTINCT color FROM cats';
 
   connection.query(query, (err, results) => {
