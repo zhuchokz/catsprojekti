@@ -22,7 +22,7 @@ const Register = () => {
       const result = await response.text();
       setError(result);
     } else {
-      navigate('/');
+      navigate('/login');
     }
   };
 

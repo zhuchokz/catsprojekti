@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Comments from './comments';  
+import Comments from './comments';
 import "./pages.css";
 
 const BreedPage = () => {
-    const { breed } = useParams(); 
+    const { breed } = useParams();
     const [cat, setCat] = useState(null);
     const [favorites, setFavorites] = useState([]);
     const [isFavorite, setIsFavorite] = useState(false);
     const user = JSON.parse(localStorage.getItem('user'));
-    const [userId, setUserId] = useState(user.user_id); 
+    const [userId, setUserId] = useState(user?.user_id);
 
     useEffect(() => {
         const fetchCat = async () => {
@@ -17,7 +17,7 @@ const BreedPage = () => {
                 const response = await fetch(`http://localhost:3005/cats/${breed}`);
                 const data = await response.json();
                 if (data.length > 0) {
-                    setCat(data[0]); 
+                    setCat(data[0]);
                 } else {
                     setCat(null);
                 }
@@ -25,13 +25,15 @@ const BreedPage = () => {
                 console.error('Error fetching cat:', error);
             }
         };
-        fetchCat();
-    }, [breed]);
+        if (!cat) {
+            fetchCat();
+        }
+    }, [cat, breed]);
 
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const response = await fetch(`http://localhost:3005/favorites/${userId}`);
+                const response = await fetch(`http://localhost:3005/favorites?user_id=${userId}`);
                 const data = await response.json();
                 setFavorites(data);
                 setIsFavorite(data.some(favorite => favorite.cat_id === cat?.id));
@@ -49,7 +51,7 @@ const BreedPage = () => {
 
         if (isFavorite) {
             try {
-                await fetch(`http://localhost:3005/favorites/${cat.id}`, {
+                await fetch(`http://localhost:3005/favorites/${userId}/${cat.id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -75,7 +77,7 @@ const BreedPage = () => {
             } catch (error) {
                 console.error('Error adding favorite:', error);
             }
-            
+
         }
     };
 
@@ -89,17 +91,18 @@ const BreedPage = () => {
             <div className="breed-page-container">
                 <img className="breed-image" src={`/images/cats/${cat.photo}`} alt={cat.breed} />
                 <div className="cat-details">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin eget ligula vel facilisis. Duis placerat massa mattis nulla laoreet hendrerit. Curabitur sed sodales purus, nec bibendum dolor. Donec porta velit sapien, vitae ullamcorper mi eleifend eget. Curabitur consectetur turpis orci, vitae tempor enim euismod nec. Phasellus ac massa vel enim efficitur blandit eu varius risus. Integer leo felis, venenatis nec lacinia eget, cursus at odio. Pellentesque euismod, ligula a maximus mattis, dolor est lobortis leo, non dapibus ante odio id odio. Nam diam lacus, congue id orci sed, fringilla sollicitudin ante. Quisque sed finibus ipsum, at elementum urna.</p>
+                    <h4>{cat.description} </h4>
+                    {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin eget ligula vel facilisis. Duis placerat massa mattis nulla laoreet hendrerit. Curabitur sed sodales purus, nec bibendum dolor. Donec porta velit sapien, vitae ullamcorper mi eleifend eget. Curabitur consectetur turpis orci, vitae tempor enim euismod nec. Phasellus ac massa vel enim efficitur blandit eu varius risus. Integer leo felis, venenatis nec lacinia eget, cursus at odio. Pellentesque euismod, ligula a maximus mattis, dolor est lobortis leo, non dapibus ante odio id odio. Nam diam lacus, congue id orci sed, fringilla sollicitudin ante. Quisque sed finibus ipsum, at elementum urna.</p> */}
                     <strong>Color:</strong> {cat.color} <br />
                     <strong>Personality:</strong> {cat.personality} <br />
                     <strong>Size:</strong> {cat.size} <br />
                     <strong>Facts:</strong> {cat.breed_facts} <br />
-                    <button className='favorites' onClick={handleToggleFavorite}>
+                    {userId && <button className='favorites' onClick={handleToggleFavorite}>
                         {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-                    </button>
+                    </button>}
                 </div>
             </div>
-            <Comments breed={breed} />
+           <Comments breed={breed} />
         </>
     );
 };

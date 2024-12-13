@@ -5,6 +5,8 @@ import './Header.css';
 
 const Header = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const [userId, setUserId] = useState(user?.user_id);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -21,15 +23,15 @@ const Header = () => {
                 <p>Mewtopia</p>
             </a>
             <nav>
-               
-                <div className="nav-center">
+
+                {/* <div className="nav-center">
                     <input type="text" placeholder="Search..." className="search-input" />
-                </div>
+                </div> */}
                 <div className="nav-right">
-                <Link to="/cats">Cats</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-                <Link to="/profile">Profile</Link>
+                    <Link to="/cats">Cats</Link>
+                    {!userId && <Link to="/login">Login</Link>}
+                    {!userId && <Link to="/register">Register</Link>}
+                    {userId && <Link to="/profile">Profile</Link>}
                     <img
                         id="themeToggle"
                         src={theme === 'light' ? '/images/moon.png' : '/images/sun.png'}

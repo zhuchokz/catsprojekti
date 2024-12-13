@@ -1,18 +1,20 @@
+
 :root[data-theme="light"] {
-    --text: #333333;
-    --background: #f9f5e6;
-    --primary: #ab5959;
-    --secondary: #d5a5a5;
-    --accent: #c57d7d;
-  }
-  
-  :root[data-theme="dark"] {
-    --text: #cccccc;
-    --background: #191506;
-    --primary: #a65454;
-    --secondary: #5a2a2a;
-    --accent: #823a3a;
-  }
+  --text: #333333;
+  --background: #f9f5e6;
+  --primary: #ab5959;
+  --secondary: #d5a5a5;
+  --accent: #c57d7d;
+  --box-shadow: #825353;
+}
+:root[data-theme="dark"] {
+  --text: #cccccc;
+  --background: #191506;
+  --primary: #a65454;
+  --secondary: #5a2a2a;
+  --accent: #823a3a;
+  --box-shadow: #381a1a;
+}
   
   .auth-container {
     display: flex;
