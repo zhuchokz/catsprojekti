@@ -77,6 +77,6 @@
 }
 
 .color-item:nth-child(even) {
-    background-color: var(--accent);
+    background-color: var(--secondary);
     border: 2px solid var(--accent);    
 }
