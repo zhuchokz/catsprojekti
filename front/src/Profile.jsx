@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import "./profile.css";
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
 
   const [user, setUser] = useState(null);
   const [favoriteCats, setFavoriteCats] = useState([]);
   const storedUser = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -74,7 +76,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    window.location.reload();
+    navigate('/login');
   };
 
   const handleRemoveFavorite = (catId) => {
