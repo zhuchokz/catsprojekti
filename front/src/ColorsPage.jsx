@@ -35,9 +35,9 @@ const ColoursPage = () => {
 
  
     return (
-        <div className="colours-page">
-        
-        <h2>Colors</h2>
+      <>
+      <h2>Colors</h2>
+      <div className="colours-page">
         { 
     <div className="colordiv">
   <ul>
@@ -53,6 +53,7 @@ const ColoursPage = () => {
   </ul>
 </div>}
 </div>
+    </>
     
     );
 };

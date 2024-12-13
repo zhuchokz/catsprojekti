@@ -18,7 +18,7 @@
     letter-spacing: 1.5px;
 }
 
-.colordiv {
+/* .colordiv {
     background-color: var(--secondary); 
     border-radius: 25px;
     padding: 30px;
@@ -26,7 +26,7 @@
     margin: 0 auto;
     box-shadow: 0 10px 20px var(--accent);
     overflow: hidden;
-}
+} */
 
 .colordiv ul {
     list-style: none;
@@ -41,7 +41,7 @@
 
 .color-item {
     background-color: var(--secondary); 
-    /* border: 2px solid var(--accent);  */
+    border: 2px solid var(--accent); 
     border-radius: 15px;
     padding: 20px;
     height: 100px;
@@ -65,12 +65,12 @@
     text-align: center;
 }
 
-.color-item strong {
+/* .color-item strong {
     display: block;
     font-weight: bold;
     color: var(--primary); 
     margin-bottom: 10px;
-}
+} */
 
 .color-item:nth-child(odd) {
     background-color: var(--background); 
@@ -78,5 +78,5 @@
 
 .color-item:nth-child(even) {
     background-color: var(--accent);
-    border: 2px solid var(--accent);
+    border: 2px solid var(--accent);    
 }

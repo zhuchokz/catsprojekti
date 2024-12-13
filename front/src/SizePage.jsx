@@ -28,8 +28,9 @@ const SizesPage = () => {
     };
 
     return (
+        <>
+        <h2>Sizes</h2>
         <div className="sizes-page">
-            <h2>Sizes</h2>
             <ul>
                 {sizes.map((size, index) => (
                     <li key={index} onClick={() => handleSizeClick(size)}>
@@ -38,6 +39,7 @@ const SizesPage = () => {
                 ))}
             </ul>
         </div>
+        </>
     );
 };
 
