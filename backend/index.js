@@ -32,10 +32,9 @@ connection.connect((err) => {
   console.log('Connected to MySQL database');
 });
 
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
-app.get('/cats', (req, res) => {
+
+app.get('/api/cats', (req, res) => {
   const { color, size, character } = req.query;
   let query = 'SELECT DISTINCT * FROM cats';
   let params = [];
@@ -78,7 +77,7 @@ function hashPassword(password) {
 app.use(express.static(__dirname));
 
 
-app.get('/colors', (req, res) => {
+app.get('/api/colors', (req, res) => {
   const query = 'SELECT DISTINCT color FROM cats';
 
   connection.query(query, (err, results) => {
@@ -92,7 +91,7 @@ app.get('/colors', (req, res) => {
   });
 });
 
-app.get('/size', (req, res) => {
+app.get('/api/size', (req, res) => {
   const query = 'SELECT DISTINCT size FROM cats';
   connection.query(query, (err, results) => {
     if (err) {
@@ -104,7 +103,7 @@ app.get('/size', (req, res) => {
   });
 });
 
-app.get('/character', (req, res) => {
+app.get('/api/character', (req, res) => {
   const query = 'SELECT DISTINCT personality FROM cats';
   connection.query(query, (err, results) => {
     if (err) {
@@ -116,7 +115,7 @@ app.get('/character', (req, res) => {
   });
 });
 
-app.get('/cats/:breed', (req, res) => {
+app.get('/api/cats/:breed', (req, res) => {
   const { breed } = req.params;
   const query = 'SELECT * FROM cats WHERE breed = ?';
 
@@ -133,7 +132,7 @@ app.get('/cats/:breed', (req, res) => {
 
 const commentsFilePath = path.join(__dirname, 'comments.json');
 
-app.get('/comments/:breed', (req, res) => {
+app.get('/api/comments/:breed', (req, res) => {
   const { breed } = req.params;
   fs.readFile(commentsFilePath, 'utf-8', (err, data) => {
     if (err) {
@@ -155,7 +154,7 @@ function generateId(length = 16) {
   }
   return result;
 }
-app.post('/comments/:breed', (req, res) => {
+app.post('/api/comments/:breed', (req, res) => {
   // const { commentstext, user_id, cat_id } = req.body;
   // console.log(user_id)
 
@@ -206,7 +205,7 @@ app.post('/comments/:breed', (req, res) => {
 
 // Users
 
-app.post('/register', (req, res) => {
+app.post('/api/register', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -236,7 +235,7 @@ app.post('/register', (req, res) => {
     );
   });
 });
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -271,7 +270,7 @@ app.post('/login', (req, res) => {
 
 
 
-app.post('/logout', (req, res) => {
+app.post('/api/logout', (req, res) => {
   if (req.session.user) {
     req.session.destroy((err) => {
       if (err) {
@@ -284,7 +283,7 @@ app.post('/logout', (req, res) => {
   }
 });
 
-app.get('/profile', (req, res) => {
+app.get('/api/profile', (req, res) => {
   if (!req.session.user) {
     return res.status(401).send('Please log in to view this page.');
   }
@@ -304,7 +303,7 @@ app.get('/profile', (req, res) => {
   });
 });
 
-app.post('/favorites', (req, res) => {
+app.post('/api/favorites', (req, res) => {
   const { user_id, cat_id } = req.body;
   // console.log(user_id)
 
@@ -325,7 +324,7 @@ app.post('/favorites', (req, res) => {
 });
 
 
-app.get('/favorites', (req, res) => {
+app.get('/api/favorites', (req, res) => {
   const { user_id } = req.query;
   // console.log(user_id)
   if (!user_id) {
@@ -342,7 +341,7 @@ app.get('/favorites', (req, res) => {
   });
 });
 
-app.get('/favorites/:user_id', (req, res) => {
+app.get('/api/favorites/:user_id', (req, res) => {
   const { user_id } = req.params;
 
   if (!user_id) {
@@ -371,7 +370,7 @@ app.get('/favorites/:user_id', (req, res) => {
 });
 
 
-app.delete('/favorites/:user_id/:cat_id', (req, res) => {
+app.delete('/api/favorites/:user_id/:cat_id', (req, res) => {
   const { user_id, cat_id } = req.params;
 
   if (!user_id || !cat_id) {
@@ -389,7 +388,8 @@ app.delete('/favorites/:user_id/:cat_id', (req, res) => {
 });
 
 
-
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 
 app.listen(port, host, () => {

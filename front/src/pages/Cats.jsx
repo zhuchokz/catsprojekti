@@ -8,7 +8,7 @@ const Cats = () => {
 
   useEffect(() => {
     const fetchCatsByColor = async () => {
-      let url = 'http://localhost:3005/cats';  
+      let url = 'http://localhost:3005/api/cats';  
 
       if (color) {
         url = `http://localhost:3005/cats?color=${color}`;  

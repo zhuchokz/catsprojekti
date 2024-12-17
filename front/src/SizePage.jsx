@@ -9,7 +9,7 @@ const SizesPage = () => {
     useEffect(() => {
         const fetchSizes = async () => {
             try {
-                const response = await fetch("http://localhost:3005/size");
+                const response = await fetch("http://localhost:3005/api/size");
                 const data = await response.json();
 
                 const uniqueSizes = Array.from(new Set(data.flatMap((item) => item.size.split(",")).map((size) => size.trim()))).sort();

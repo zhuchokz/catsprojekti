@@ -9,7 +9,7 @@ const Character = () => {
     useEffect(() => {
         const fetchPersonalities = async () => {
             try {
-                const response = await fetch('http://localhost:3005/character');
+                const response = await fetch('http://localhost:3005/api/character');
                 const data = await response.json();
 
                 const uniquePersonalities = Array.from(
