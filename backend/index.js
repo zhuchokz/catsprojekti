@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -6,7 +7,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const fs = require('fs');
 
-const dbConfig = require('./dbconfig.json');
+// const dbConfig = require('./dbconfig.json');
 const { port, host } = require('./config.json');
 
 // const corsOptions = {
@@ -19,10 +20,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use('/public', express.static(path.join(__dirname, 'public')));
 
-app.use( express.static(path.join(__dirname, 'public'))); //build
+app.use(express.static(path.join(__dirname, 'public'))); //build
 app.set('views', path.join(__dirname, 'templates'));
 
-const connection = mysql.createConnection(dbConfig);
+const connection = mysql.createConnection({
+  host: process.env.db_host,
+  user: process.env.db_user,
+  password: process.env.db_password,
+  database: process.env.db_name,
+  port: process.env.db_port,
+  ssl: {
+    ca: fs.readFileSync("./DigiCertGlobalRootCA.crt.pem")
+  }
+});
 
 connection.connect((err) => {
   if (err) {
@@ -174,7 +184,7 @@ app.post('/api/comments/:breed', (req, res) => {
   // });
   const { breed } = req.params;
   // console.log(req.session)
-  const newComment = { ...req.body, breed, id: generateId()};
+  const newComment = { ...req.body, breed, id: generateId() };
 
   fs.readFile(commentsFilePath, 'utf-8', (err, data) => {
 
