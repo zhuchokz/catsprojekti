@@ -9,17 +9,17 @@ const fs = require('fs');
 const dbConfig = require('./dbconfig.json');
 const { port, host } = require('./config.json');
 
-const corsOptions = {
-  origin: "http://localhost:5173", // Replace with your client origin
-  credentials: true, // Allows cookies and other credentials
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "http://localhost:5173", // Replace with your client origin
+//   credentials: true, // Allows cookies and other credentials
+// };
+// app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+// app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// app.use( express.static(path.join(__dirname, 'public')));
+app.use( express.static(path.join(__dirname, 'public'))); //build
 app.set('views', path.join(__dirname, 'templates'));
 
 const connection = mysql.createConnection(dbConfig);
@@ -31,6 +31,7 @@ connection.connect((err) => {
   }
   console.log('Connected to MySQL database');
 });
+
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
@@ -386,6 +387,7 @@ app.delete('/favorites/:user_id/:cat_id', (req, res) => {
     res.status(200).send('Favorite removed');
   });
 });
+
 
 
 

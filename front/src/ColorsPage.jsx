@@ -33,29 +33,33 @@ const ColoursPage = () => {
     navigate(`/cats/color/${color}`);
   };
 
- 
-    return (
-      <>
+
+  return (
+    <>
       <h2>Colors</h2>
       <div className="colours-page">
-        { 
-    <div className="colordiv">
-  <ul>
-    {colors.length > 0 ? (
-      colors.map((color, index) => (
-        <div key={index} className="color-item">
-          <li onClick={() => handleColorClick(color)}>{color}</li>
+        <div className="colordiv">
+          <ul>
+            {colors.length > 0 ? (
+              colors.map((color, index) => (
+                <div
+                  key={index}
+                  className="color-item"
+                  onClick={() => handleColorClick(color)}
+                >
+                  <li>{color}</li>
+                </div>
+              ))
+            ) : (
+              <p>No colors available.</p>
+            )}
+          </ul>
         </div>
-      ))
-    ) : (
-      <p>No colors available.</p>
-    )}
-  </ul>
-</div>}
-</div>
+      </div>
+
     </>
-    
-    );
+
+  );
 };
 
 export default ColoursPage;
