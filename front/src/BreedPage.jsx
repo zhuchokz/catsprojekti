@@ -14,7 +14,7 @@ const BreedPage = () => {
     useEffect(() => {
         const fetchCat = async () => {
             try {
-                const response = await fetch(`http://localhost:3005/cats/${breed}`);
+                const response = await fetch(`http://localhost:3005/api/cats/${breed}`);
                 const data = await response.json();
                 if (data.length > 0) {
                     setCat(data[0]);
@@ -33,7 +33,7 @@ const BreedPage = () => {
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const response = await fetch(`http://localhost:3005/favorites?user_id=${userId}`);
+                const response = await fetch(`http://localhost:3005/api/favorites?user_id=${userId}`);
                 const data = await response.json();
                 setFavorites(data);
                 setIsFavorite(data.some(favorite => favorite.cat_id === cat?.id));
@@ -51,7 +51,7 @@ const BreedPage = () => {
 
         if (isFavorite) {
             try {
-                await fetch(`http://localhost:3005/favorites/${userId}/${cat.id}`, {
+                await fetch(`http://localhost:3005/api/favorites/${userId}/${cat.id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const BreedPage = () => {
             }
         } else {
             try {
-                await fetch('http://localhost:3005/favorites', {
+                await fetch('http://localhost:3005/api/favorites', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

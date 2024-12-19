@@ -8,7 +8,7 @@ const Comments = ({ breed }) => {
   const [userId, setUserId] = useState(user?.user_id);
 
   useEffect(() => {
-    fetch(`http://localhost:3005/comments/${breed}`)
+    fetch(`http://localhost:3005/api/comments/${breed}`)
       .then((response) => response.json())
       .then((data) => setComments(data))
       .catch((error) => console.error("Error fetching comments:", error));
@@ -24,7 +24,7 @@ const Comments = ({ breed }) => {
       breed,
     };
 
-    fetch(`http://localhost:3005/comments/${breed}`, {
+    fetch(`http://localhost:3005/api/comments/${breed}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

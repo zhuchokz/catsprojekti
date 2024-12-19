@@ -42,7 +42,7 @@ const Profile = () => {
   const fetchFavorites = () => {
     const userId = storedUser.user_id;
 
-    fetch(`http://localhost:3005/favorites/${userId}`, {
+    fetch(`http://localhost:3005/api/favorites/${userId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('user')}`,
@@ -80,7 +80,7 @@ const Profile = () => {
   };
 
   const handleRemoveFavorite = (catId) => {
-    fetch(`http://localhost:3005/favorites/${user.user_id}/${catId}`, {
+    fetch(`http://localhost:3005/api/favorites/${user.user_id}/${catId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('user')}`,

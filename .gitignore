@@ -1,2 +1,4 @@
 node_modules
 dbconfig.json
+.env
+DigiCertGlobalRootCA.crt.pem

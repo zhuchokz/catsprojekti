@@ -10,7 +10,7 @@ const AllCats = () => {
 
     useEffect(() => {
         const fetchCats = async () => {
-            let url = "http://localhost:3005/cats";
+            let url = "http://localhost:3005/api/cats";
 
             try {
                 const response = await fetch(url);
